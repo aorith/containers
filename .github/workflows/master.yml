@@ -3,7 +3,7 @@ name: ci
 on:
   push:
     branches:
-      - 'master'
+      - 'manual'
 
 jobs:
   docker:
@@ -27,6 +27,6 @@ jobs:
         with:
           cache-from: aorith:fedora-toolbox:latest
           context: "{{defaultContext}}:fedora-toolbox"
-          file: "{context}/Containerfile"
+          file: "Containerfile"
           push: true
           tags: aorith/fedora-toolbox:latest
