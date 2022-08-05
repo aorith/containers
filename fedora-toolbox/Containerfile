@@ -1,3 +1,3 @@
 FROM registry.fedoraproject.org/fedora:36
 ADD * /.setup/
-RUN bash -eux -o pipefail /.setup/bootstrap.sh
+RUN bash /.setup/bootstrap.sh
