@@ -5,6 +5,12 @@ name: build_and_push
 #    branches:
 #      - 'master'
 
+on:
+  workflow_dispatch:
+    inputs:
+      anything:
+        description: 'any value'
+
 jobs:
   docker:
     runs-on: ubuntu-latest
