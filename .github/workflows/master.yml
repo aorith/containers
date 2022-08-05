@@ -1,9 +1,9 @@
 name: build_and_push
 
-on:
-  push:
-    branches:
-      - 'manual'
+#on:
+#  push:
+#    branches:
+#      - 'master'
 
 jobs:
   docker:
