@@ -1,3 +1,0 @@
-FROM registry.fedoraproject.org/fedora:36
-ADD * /.setup/
-RUN bash /.setup/bootstrap.sh

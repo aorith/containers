@@ -1,15 +1,16 @@
 name: build_and_push
 
-#on:
-#  push:
-#    branches:
-#      - 'master'
-
 on:
-  workflow_dispatch:
-    inputs:
-      anything:
-        description: 'any value'
+  push:
+    tags:
+      - v*
+
+# manually:
+#on:
+#  workflow_dispatch:
+#    inputs:
+#      anything:
+#        description: 'any value'
 
 jobs:
   docker:
@@ -31,8 +32,8 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v3
         with:
-          cache-from: aorith:fedora-toolbox:latest
-          context: "{{defaultContext}}:fedora-toolbox"
+          cache-from: aorith:fbox:latest
+          context: "{{defaultContext}}:fbox"
           file: "Containerfile"
           push: true
-          tags: aorith/fedora-toolbox:latest
+          tags: aorith/fbox:latest

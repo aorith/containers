@@ -1,7 +1,0 @@
-dnf-plugins-core
-podman
-podman-compose
-flatpak
-flatpak-builder
-flatpak-spawn
-lsof
