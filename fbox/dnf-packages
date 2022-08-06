@@ -63,7 +63,6 @@ unzip
 zstd
 
 # pyenv
-"@Development Tools"
 bzip2 
 bzip2-devel
 findutils

@@ -11,6 +11,6 @@ RUN dnf install -y \
 RUN printf "fastestmirror=True\nmax_parallel_downloads=10\n" >> "/etc/dnf/dnf.con" \
       && sed -i "s/nodocs//" "/etc/dnf/dnf.conf" \
       && dnf update -y --refresh \
-      && dnf install -y $(grep -Ev '^#' /bootstrap/dnf-packages) \
+      && dnf install -y $(grep -Ev '^#' /bootstrap/dnf-packages) "@Development Tools" \
       && dnf clean all \
       && rm -rf /bootstrap
