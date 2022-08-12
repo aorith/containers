@@ -33,7 +33,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           cache-from: aorith:fbox:latest
-          build-args:
+          build-args: |
             CURRENT_VERSION_STRING: "Generated with the ref: $GITHUB_REF_NAME"
           context: "{{defaultContext}}:fbox"
           file: "Containerfile"
