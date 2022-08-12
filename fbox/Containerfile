@@ -19,4 +19,4 @@ RUN printf "fastestmirror=True\nmax_parallel_downloads=10\n" >> "/etc/dnf/dnf.co
       && dnf clean all \
       && rm -rf /bootstrap && \
       echo "$CURRENT_VERSION_REF" > /CURRENT_VERSION.txt && \
-      echo "Build date: $(date +'%Y-%m-%d %H:%M:%S')" > /BUILD_DATE.txt
+      echo "$(date +'%Y-%m-%d %H:%M:%S')" > /BUILD_DATE.txt
