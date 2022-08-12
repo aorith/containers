@@ -15,3 +15,4 @@ git add -A || true
 git commit -m "$last_tag => $new_tag" 2>/dev/null || true
 git tag "$new_tag"
 git push --all
+git push --tags
