@@ -34,7 +34,7 @@ jobs:
         with:
           cache-from: aorith:fbox:latest
           build-args: |
-            CURRENT_VERSION_STRING: "Generated with the ref: $GITHUB_REF_NAME"
+            CURRENT_VERSION_STRING: "Generated with the ref: "${{ env.GITHUB_REF_NAME }}
           context: "{{defaultContext}}:fbox"
           file: "Containerfile"
           push: true
