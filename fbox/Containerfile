@@ -2,6 +2,8 @@ FROM registry.fedoraproject.org/fedora:36
 
 ARG CURRENT_VERSION_STRING
 
+LABEL "io.containers.autoupdate"="registry"
+
 ADD * /bootstrap/
 
 RUN dnf install -y \
