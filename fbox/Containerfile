@@ -1,6 +1,6 @@
 FROM registry.fedoraproject.org/fedora:36
 
-ARG CURRENT_VERSION_STRING
+ARG CURRENT_VERSION_REF
 
 LABEL "io.containers.autoupdate"="registry"
 
@@ -18,4 +18,5 @@ RUN printf "fastestmirror=True\nmax_parallel_downloads=10\n" >> "/etc/dnf/dnf.co
       && dnf install -y $(grep -Ev '^#' /bootstrap/dnf-packages) "@Development Tools" \
       && dnf clean all \
       && rm -rf /bootstrap && \
-      printf '%s\n' "${CURRENT_VERSION_STRING}" > /CURRENT_VERSION.txt
+      echo "$CURRENT_VERSION_REF" > /CURRENT_VERSION.txt && \
+      echo "Build date: $(date +'%Y-%m-%d %H:%M:%S')" > /BUILD_DATE.txt
