@@ -12,6 +12,9 @@ on:
 #      anything:
 #        description: 'any value'
 
+env:
+  CURRENT_VERSION_STRING: "Generated with the ref: $GITHUB_REF_NAME"
+
 jobs:
   docker:
     runs-on: ubuntu-latest

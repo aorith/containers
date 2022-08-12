@@ -1,5 +1,7 @@
 FROM registry.fedoraproject.org/fedora:36
 
+ARG CURRENT_VERSION_STRING
+
 ADD * /bootstrap/
 
 RUN dnf install -y \
@@ -13,4 +15,5 @@ RUN printf "fastestmirror=True\nmax_parallel_downloads=10\n" >> "/etc/dnf/dnf.co
       && dnf update -y --refresh \
       && dnf install -y $(grep -Ev '^#' /bootstrap/dnf-packages) "@Development Tools" \
       && dnf clean all \
-      && rm -rf /bootstrap
+      && rm -rf /bootstrap && \
+      printf '%s\n' "${CURRENT_VERSION_STRING}" > /CURRENT_VERSION.txt

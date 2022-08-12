@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+cd "$(dirname -- "$0")" || exit 1
 
 last_tag=$(git ls-remote --tags --refs git@github.com:aorith/containers.git "v$(date +%Y%m)*" | tail -1 | grep -Eo 'v[0-9]+')
 curr_date=$(date +%Y%m%d)
@@ -9,4 +10,8 @@ else
     new_tag="v${curr_date}00"
 fi
 
-echo "$last_tag => $new_tag"
+set -e
+git add -A || true
+git commit -m "$last_tag => $new_tag" 2>/dev/null || true
+git tag "$new_tag"
+git push --all origin master
