@@ -11,8 +11,8 @@ else
 fi
 
 set -e
-git add -A || true
-git commit -sm "$last_tag => $new_tag" 2>/dev/null || true
-git tag "$new_tag"
+git add -A
+git commit -S -m "$last_tag => $new_tag"
+git tag -s "$new_tag"
 git push --all
 git push --tags
