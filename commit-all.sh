@@ -13,6 +13,6 @@ fi
 set -e
 git add -A
 git commit -S -m "$last_tag => $new_tag"
-git tag -s "$new_tag"
+git tag -m "$new_tag" -s "$new_tag"
 git push --all
 git push --tags
