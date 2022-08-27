@@ -4,6 +4,8 @@ on:
   push:
     tags:
       - v*
+  schedule:
+    - cron: '35 03 * * *'
 
 # manually:
 #on:
