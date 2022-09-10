@@ -35,7 +35,6 @@ net-tools
 nmap
 openssl
 powertop
-procps
 rsync
 sqlite
 sudo
@@ -75,5 +74,14 @@ tk-devel
 xz
 xz-devel
 zlib-devel 
+
+# distrobox
+diffutils
+ncurses
+passwd
+pinentry
+procps-ng
+shadow-utils
+util-linux
 
 # vim: ft=sh
