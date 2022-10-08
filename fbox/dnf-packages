@@ -84,8 +84,10 @@ procps-ng
 shadow-utils
 util-linux
 
-# cloud-init
+# cloud-init / libvirt
 cloud-utils
 genisoimage
+libvirt-client
+virt-install
 
 # vim: ft=sh
