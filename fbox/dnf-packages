@@ -84,4 +84,7 @@ procps-ng
 shadow-utils
 util-linux
 
+# cloud-init
+cloud-utils
+
 # vim: ft=sh
