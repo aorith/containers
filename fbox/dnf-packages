@@ -86,5 +86,6 @@ util-linux
 
 # cloud-init
 cloud-utils
+genisoimage
 
 # vim: ft=sh
