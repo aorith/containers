@@ -7,8 +7,8 @@ LABEL "io.containers.autoupdate"="registry"
 ADD * /bootstrap/
 
 RUN dnf install -y \
-	  "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-36.noarch.rpm" \
-	  "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-36.noarch.rpm" \
+	  "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-37.noarch.rpm" \
+	  "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-37.noarch.rpm" \
     && dnf install -y \
       "https://github.com/charmbracelet/glow/releases/download/v1.4.1/glow_1.4.1_linux_amd64.rpm"
 
