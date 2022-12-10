@@ -78,6 +78,7 @@ zlib-devel
 # neovim
 gcc-c++
 tree-sitter-cli
+node
 
 # distrobox
 diffutils
