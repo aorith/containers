@@ -62,7 +62,7 @@ unzip
 zstd
 
 # pyenv
-bzip2 
+bzip2
 bzip2-devel
 findutils
 libffi-devel
@@ -73,7 +73,10 @@ sqlite-devel
 tk-devel
 xz
 xz-devel
-zlib-devel 
+zlib-devel
+
+# neovim
+gcc-c++
 
 # distrobox
 diffutils
