@@ -5,7 +5,7 @@ on:
     tags:
       - v*
   schedule:
-    - cron: '35 03 * * *'
+    - cron: '35 03 * * 4'
 
 # manually:
 #on:
