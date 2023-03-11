@@ -15,6 +15,7 @@ ctags
 curl
 devscripts
 dos2unix
+fd-find
 file
 fzf
 git
@@ -35,6 +36,7 @@ net-tools
 nmap
 openssl
 powertop
+ripgrep
 rsync
 sqlite
 sudo
