@@ -5,7 +5,7 @@ on:
     tags:
       - v*
   schedule:
-    - cron: '35 03 * * 2,4,6'
+    - cron: "35 03 * * 2,4,6"
 
 env:
   IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
@@ -21,7 +21,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        major_version: [ 37 ]
+        major_version: [37]
         include:
           - image_name: "fbox"
           - is_stable: false
@@ -61,7 +61,7 @@ jobs:
         with:
           context: ${{ matrix.image_name }}
           containerfiles: |
-            .${{ matrix.image_name }}/Containerfile
+            ${{ matrix.image_name }}/Containerfile
           image: ${{ matrix.image_name }}
           tags: |
             ${{ steps.generate-tags.outputs.alias_tags }}
