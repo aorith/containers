@@ -61,7 +61,7 @@ jobs:
         id: build_image
         uses: redhat-actions/buildah-build@v2
         with:
-          context: ${{ matrix.image_name }}
+          context: "{{defaultContext}}:${{ matrix.image_name }}"
           containerfiles: |
             ./Containerfile
           image: ${{ matrix.image_name }}
