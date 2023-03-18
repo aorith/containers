@@ -45,7 +45,6 @@ wmctrl
 xclip
 xdotool
 xlsclients
-yq
 
 # Archiving
 cabextract
@@ -87,4 +86,4 @@ util-linux
 # cloud-init / libvirt
 genisoimage
 
-# vim: ft=sh
+# vim: ft=conf
