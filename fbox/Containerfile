@@ -1,22 +1,20 @@
-FROM registry.fedoraproject.org/fedora:37
-
+ARG FEDORA_MAJOR_VERSION
 ARG CURRENT_VERSION_REF
+
+FROM registry.fedoraproject.org/fedora:${FEDORA_MAJOR_VERSION}
 
 LABEL "io.containers.autoupdate"="registry"
 
-ADD * /bootstrap/
+COPY dnf-packages /tmp/
 
 RUN dnf install -y \
-	  "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-37.noarch.rpm" \
-	  "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-37.noarch.rpm" \
-    && dnf install -y \
-      "https://github.com/charmbracelet/glow/releases/download/v1.4.1/glow_1.4.1_linux_amd64.rpm"
+    "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-${FEDORA_MAJOR_VERSION}.noarch.rpm" \
+    "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${FEDORA_MAJOR_VERSION}.noarch.rpm"
 
 RUN printf "\nfastestmirror=True\nmax_parallel_downloads=10\n" >> "/etc/dnf/dnf.conf" \
-      && sed -i "s/nodocs//" "/etc/dnf/dnf.conf" \
-      && dnf update -y --refresh \
-      && dnf install -y $(grep -Ev '^#' /bootstrap/dnf-packages) "@Development Tools" \
-      && dnf clean all \
-      && rm -rf /bootstrap && \
-      echo "$CURRENT_VERSION_REF" > /CURRENT_VERSION.txt && \
-      echo "$(date +'%Y-%m-%d %H:%M:%S')" > /BUILD_DATE.txt
+    && dnf update -y --refresh \
+    && dnf install -y $(grep -Ev '^#' /tmp/dnf-packages) "@Development Tools" \
+    && dnf clean all \
+    && rm -rf /tmp/* && \
+    echo "$CURRENT_VERSION_REF" > /CURRENT_VERSION.txt && \
+    echo "$(date +'%Y-%m-%d %H:%M:%S')" > /BUILD_DATE.txt
