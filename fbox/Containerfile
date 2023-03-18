@@ -20,5 +20,5 @@ RUN printf "\nfastestmirror=True\nmax_parallel_downloads=10\n" >> "/etc/dnf/dnf.
     && GOBIN=/usr/local/bin go install github.com/mikefarah/yq@latest \
     && dnf clean all \
     && rm -rf /tmp/* && \
-    echo "$CURRENT_VERSION_REF" > /CURRENT_VERSION.txt && \
+    echo "${FEDORA_MAJOR_VERSION}-${CURRENT_VERSION_REF}" > /CURRENT_VERSION.txt && \
     echo "$(date +'%Y-%m-%d %H:%M:%S')" > /BUILD_DATE.txt
