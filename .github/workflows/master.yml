@@ -52,8 +52,6 @@ jobs:
               echo "${TAG}"
           done
 
-          ls -lrt
-
           echo "alias_tags=${BUILD_TAGS[*]}" >> "$GITHUB_OUTPUT"
 
       # Build image using Buildah action
@@ -63,7 +61,7 @@ jobs:
         with:
           context: ${{ matrix.image_name }}
           containerfiles: |
-            ./Containerfile
+            .${{ matrix.image_name }}/Containerfile
           image: ${{ matrix.image_name }}
           tags: |
             ${{ steps.generate-tags.outputs.alias_tags }}
