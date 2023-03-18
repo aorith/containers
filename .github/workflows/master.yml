@@ -52,6 +52,8 @@ jobs:
               echo "${TAG}"
           done
 
+          pwd -P
+
           echo "alias_tags=${BUILD_TAGS[*]}" >> "$GITHUB_OUTPUT"
 
       # Build image using Buildah action
