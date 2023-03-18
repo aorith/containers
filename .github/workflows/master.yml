@@ -52,7 +52,7 @@ jobs:
               echo "${TAG}"
           done
 
-          pwd -P
+          ls -lrt
 
           echo "alias_tags=${BUILD_TAGS[*]}" >> "$GITHUB_OUTPUT"
 
@@ -61,7 +61,7 @@ jobs:
         id: build_image
         uses: redhat-actions/buildah-build@v2
         with:
-          context: "{{defaultContext}}:${{ matrix.image_name }}"
+          context: ${{ matrix.image_name }}
           containerfiles: |
             ./Containerfile
           image: ${{ matrix.image_name }}
