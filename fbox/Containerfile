@@ -1,7 +1,10 @@
 ARG FEDORA_MAJOR_VERSION
-ARG CURRENT_VERSION_REF
 
 FROM registry.fedoraproject.org/fedora:${FEDORA_MAJOR_VERSION}
+
+# ARGs before FROM must be redeclared
+ARG FEDORA_MAJOR_VERSION
+ARG CURRENT_VERSION_REF
 
 LABEL "io.containers.autoupdate"="registry"
 
