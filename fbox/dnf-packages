@@ -17,6 +17,7 @@ git-credential-libsecret
 golang
 iproute
 iputils
+jq
 less
 lm_sensors
 lsof
@@ -44,6 +45,7 @@ wmctrl
 xclip
 xdotool
 xlsclients
+yq
 
 # Archiving
 cabextract
