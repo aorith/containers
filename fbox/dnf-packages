@@ -32,7 +32,7 @@ openssl
 powertop
 ripgrep
 rsync
-sqlite
+skopeo
 sudo
 tcpdump
 tig
