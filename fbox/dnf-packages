@@ -14,6 +14,7 @@ file
 fzf
 git
 git-credential-libsecret
+gitui
 golang
 iproute
 iputils
