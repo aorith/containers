@@ -20,5 +20,10 @@ RUN printf "\nfastestmirror=True\nmax_parallel_downloads=10\n" >> "/etc/dnf/dnf.
     && GOBIN=/usr/local/bin go install github.com/mikefarah/yq@latest \
     && dnf clean all \
     && rm -rf /tmp/* && \
+    ln -s /usr/bin/distrobox-host-exec /usr/local/bin/rpm-ostree && \
+    ln -s /usr/bin/distrobox-host-exec /usr/local/bin/podman && \
+    ln -s /usr/bin/distrobox-host-exec /usr/local/bin/wl-copy && \
+    ln -s /usr/bin/distrobox-host-exec /usr/local/bin/wl-paste && \
+    ln -s /usr/bin/distrobox-host-exec /usr/local/bin/xclip && \
     echo "${FEDORA_MAJOR_VERSION}-${CURRENT_VERSION_REF}" > /CURRENT_VERSION.txt && \
     echo "$(date +'%Y-%m-%d %H:%M:%S')" > /BUILD_DATE.txt

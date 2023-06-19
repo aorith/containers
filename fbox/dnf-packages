@@ -50,11 +50,6 @@ tree
 vim
 vte-profile
 wget
-wl-clipboard
-wmctrl
-xclip
-xdotool
-xlsclients
 
 # Archiving
 cabextract
