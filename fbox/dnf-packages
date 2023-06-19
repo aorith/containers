@@ -74,12 +74,6 @@ xz
 xz-devel
 zlib-devel
 
-# neovim
-neovim
-gcc-c++
-tree-sitter-cli
-npm
-
 # distrobox
 diffutils
 ncurses

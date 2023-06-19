@@ -1,5 +1,8 @@
-ARG FEDORA_MAJOR_VERSION
+FROM docker.io/nixos/nix:latest AS nix
+RUN cd /tmp/ && nix build --extra-experimental-features "nix-command flakes" github:aorith/neovim-flake && \
+        tar -cf neovim.tar $(nix-store -qR result/)
 
+ARG FEDORA_MAJOR_VERSION
 FROM registry.fedoraproject.org/fedora:${FEDORA_MAJOR_VERSION}
 
 # ARGs before FROM must be redeclared
@@ -8,16 +11,20 @@ ARG CURRENT_VERSION_REF
 
 LABEL "io.containers.autoupdate"="registry"
 
-COPY dnf-packages /tmp/
+COPY --from=nix /tmp/neovim.tar /tmp/
+COPY --from=nix /tmp/result/bin/nvim /tmp/
+RUN tar -xf /tmp/neovim.tar -C / && mv /tmp/nvim /usr/local/bin/nvim
 
 RUN dnf install -y \
     "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-${FEDORA_MAJOR_VERSION}.noarch.rpm" \
     "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${FEDORA_MAJOR_VERSION}.noarch.rpm"
 
+COPY ./dnf-packages /tmp/
 RUN printf "\nfastestmirror=True\nmax_parallel_downloads=10\n" >> "/etc/dnf/dnf.conf" \
     && dnf update -y --refresh \
     && dnf install -y $(grep -Ev '^#' /tmp/dnf-packages) "@Development Tools" \
     && GOBIN=/usr/local/bin go install github.com/mikefarah/yq@latest \
+    && GOBIN=/usr/local/bin go install github.com/1player/host-spawn@latest \
     && dnf clean all \
     && rm -rf /tmp/* && \
     ln -s /usr/bin/distrobox-host-exec /usr/local/bin/rpm-ostree && \
