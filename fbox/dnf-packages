@@ -4,6 +4,10 @@ dnf-plugins-core
 glibc-langpack-en
 glibc-langpack-es
 
+zsh
+zsh-autosuggestions
+zsh-syntax-highlighting
+
 acpi
 bash-completion
 bat
