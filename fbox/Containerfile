@@ -1,3 +1,6 @@
+# ARGs must be redeclared between FROM statements
+ARG FEDORA_MAJOR_VERSION
+
 FROM docker.io/nixos/nix:latest AS nix
 RUN cd /tmp/ && nix build --extra-experimental-features "nix-command flakes" github:aorith/neovim-flake && \
         tar -cf neovim.tar $(nix-store -qR result/)
@@ -5,7 +8,6 @@ RUN cd /tmp/ && nix build --extra-experimental-features "nix-command flakes" git
 ARG FEDORA_MAJOR_VERSION
 FROM registry.fedoraproject.org/fedora:${FEDORA_MAJOR_VERSION}
 
-# ARGs before FROM must be redeclared
 ARG FEDORA_MAJOR_VERSION
 ARG CURRENT_VERSION_REF
 
