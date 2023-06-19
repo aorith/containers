@@ -27,6 +27,7 @@ golang
 iproute
 iputils
 jq
+kubernetes-client
 less
 lm_sensors
 lsof
