@@ -3,8 +3,8 @@ ARG FEDORA_MAJOR_VERSION
 
 FROM docker.io/nixos/nix:latest AS nix
 WORKDIR /tmp
-RUN nix build --extra-experimental-features "nix-command flakes" github:aorith/neovim-flake && \
-        mkdir -p /tmp/neovim-closure && cp -R $(nix-store -qR result/) /tmp/neovim-closure/
+RUN nix build --extra-experimental-features "nix-command flakes" github:aorith/neovim-flake \
+        && mkdir -p /tmp/neovim-closure && cp -R $(nix-store -qR result/) /tmp/neovim-closure/
 
 ARG FEDORA_MAJOR_VERSION
 FROM registry.fedoraproject.org/fedora:${FEDORA_MAJOR_VERSION}
@@ -26,13 +26,16 @@ RUN printf "\nfastestmirror=True\nmax_parallel_downloads=10\n" >> "/etc/dnf/dnf.
     && dnf update -y --refresh \
     && dnf install -y $(grep -Ev '^#' /tmp/dnf-packages) "@Development Tools" \
     && GOBIN=/usr/local/bin go install github.com/mikefarah/yq@latest \
-    && GOBIN=/usr/local/bin go install github.com/1player/host-spawn@latest \
+    && curl -L -o /usr/local/bin/host-spawn "https://github.com/1player/host-spawn/releases/download/1.4.2/host-spawn-x86_64" \
+    && chmod +x /usr/local/bin/host-spawn \
+    && go clean -cache -modcache \
     && dnf clean all \
-    && rm -rf /tmp/* && \
-    ln -s /usr/bin/distrobox-host-exec /usr/local/bin/rpm-ostree && \
-    ln -s /usr/bin/distrobox-host-exec /usr/local/bin/podman && \
-    ln -s /usr/bin/distrobox-host-exec /usr/local/bin/wl-copy && \
-    ln -s /usr/bin/distrobox-host-exec /usr/local/bin/wl-paste && \
-    ln -s /usr/bin/distrobox-host-exec /usr/local/bin/xclip && \
-    echo "${FEDORA_MAJOR_VERSION}-${CURRENT_VERSION_REF}" > /CURRENT_VERSION.txt && \
+    && rm -rf /tmp/* \
+    && ln -s /usr/bin/distrobox-host-exec /usr/local/bin/rpm-ostree \
+    && ln -s /usr/bin/distrobox-host-exec /usr/local/bin/podman \
+    && ln -s /usr/bin/distrobox-host-exec /usr/local/bin/flatpak \
+    && ln -s /usr/bin/distrobox-host-exec /usr/local/bin/wl-copy \
+    && ln -s /usr/bin/distrobox-host-exec /usr/local/bin/wl-paste \
+    && ln -s /usr/bin/distrobox-host-exec /usr/local/bin/xclip \
+    && echo "${FEDORA_MAJOR_VERSION}-${CURRENT_VERSION_REF}" > /CURRENT_VERSION.txt \
     echo "$(date +'%Y-%m-%d %H:%M:%S')" > /BUILD_DATE.txt
