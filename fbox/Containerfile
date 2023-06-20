@@ -26,8 +26,6 @@ RUN printf "\nfastestmirror=True\nmax_parallel_downloads=10\n" >> "/etc/dnf/dnf.
     && dnf update -y --refresh \
     && dnf install -y $(grep -Ev '^#' /tmp/dnf-packages) "@Development Tools" \
     && GOBIN=/usr/local/bin go install github.com/mikefarah/yq@latest \
-    && curl -L -o /usr/local/bin/host-spawn "https://github.com/1player/host-spawn/releases/download/1.4.2/host-spawn-x86_64" \
-    && chmod +x /usr/local/bin/host-spawn \
     && go clean -cache -modcache \
     && dnf clean all \
     && rm -rf /tmp/* \
