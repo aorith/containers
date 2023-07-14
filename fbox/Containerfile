@@ -29,12 +29,11 @@ RUN dnf install -y \
 
 COPY ./dnf-packages /tmp/
 RUN printf "\nfastestmirror=True\nmax_parallel_downloads=10\n" >> "/etc/dnf/dnf.conf" \
-    && dnf copr enable -y atim/starship \
     && dnf update -y --refresh \
-    && dnf install -y starship \
     && dnf install -y $(grep -Ev '^#' /tmp/dnf-packages) "@Development Tools" \
     && curl -L -o /usr/local/bin/yq "https://github.com/mikefarah/yq/releases/download/v4.34.1/yq_linux_amd64" \
     && chmod +x /usr/local/bin/yq \
+    && dnf copr enable -y atim/starship && dnf install -y starship \
     && dnf clean all \
     && rm -rf /tmp/* \
     && echo "${FEDORA_MAJOR_VERSION}-${CURRENT_VERSION_REF}" > /CURRENT_VERSION.txt \
