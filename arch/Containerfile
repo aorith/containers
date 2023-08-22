@@ -60,4 +60,4 @@ RUN su - builder -c "yay -S --noconfirm yq" \
     && pacman -Sc --noconfirm \
     && rm -rf /tmp/* \
     && echo "${CURRENT_VERSION_REF}" > /CURRENT_VERSION.txt \
-    echo "$(date +'%Y-%m-%d %H:%M:%S')" > /BUILD_DATE.txt
+    && echo "$(date +'%Y-%m-%d %H:%M:%S')" > /BUILD_DATE.txt
