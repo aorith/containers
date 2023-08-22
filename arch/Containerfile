@@ -52,9 +52,12 @@ RUN pacman -Syu --noconfirm && pacman -S --noconfirm \
         starship \
         tmux \
         vim \
-    && su - builder -c "yay -S --noconfirm yq && yay -Ycc --noconfirm" \
+    && echo "placeholder"
+
+RUN su - builder -c "yay -S --noconfirm yq" \
+    && su - builder -c "yay -Ycc --noconfirm" \
     && userdel builder && cd /tmp && rm -rf /tmp/yay \
-    && pacman -Sc --no-confirm \
+    && pacman -Sc --noconfirm \
     && rm -rf /tmp/* \
     && echo "${CURRENT_VERSION_REF}" > /CURRENT_VERSION.txt \
     echo "$(date +'%Y-%m-%d %H:%M:%S')" > /BUILD_DATE.txt
