@@ -4,11 +4,11 @@ ARG CURRENT_VERSION_REF
 
 LABEL "io.containers.autoupdate"="registry"
 
-# COPY --from=ghcr.io/aorith/nvim:latest /build/neovim-flake-closure /nix/store
-# COPY --from=ghcr.io/aorith/nvim:latest /build/result/bin/nvim /usr/local/bin/nvim
+# COPY --from=ghcr.io/aorith/nvim-full:latest /build/neovim-flake-closure /nix/store
+# COPY --from=ghcr.io/aorith/nvim-full:latest /build/result/bin/nvim /usr/local/bin/nvim
 
-COPY --from=ghcr.io/aorith/nvim:latest /build/neovim-with-deps-closure /nix/store
-COPY --from=ghcr.io/aorith/nvim:latest /build/dotfiles/topics/nvim/result/bin/* /usr/local/bin/
+COPY --from=ghcr.io/aorith/nvim-deps:latest /build/neovim-with-deps-closure /nix/store
+COPY --from=ghcr.io/aorith/nvim-deps:latest /build/dotfiles/topics/nvim/result/bin/* /usr/local/bin/
 
 RUN useradd -m -G wheel builder && passwd -d builder \
     && curl -s --fail 'https://aur.archlinux.org/cgit/aur.git/snapshot/yay.tar.gz' -o /tmp/yay.tar.gz \
@@ -30,21 +30,15 @@ RUN pacman -Syu --noconfirm && pacman -S --noconfirm \
         bat \
         bc \
         dos2unix \
-        fd \
-        fzf \
-        git \
-        gitui \
         go \
         iproute2 \
         iputils \
-        jq \
         kubernetes-tools \
         net-tools \
         nmap \
         python-boto3 \
         python-requests \
         python-urllib3 \
-        ripgrep \
         rsync \
         skopeo \
         starship \

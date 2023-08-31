@@ -11,10 +11,3 @@ WORKDIR /build
 RUN cd /build && git clone --depth 1 https://github.com/aorith/neovim-flake && cd neovim-flake \
     && nix flake update && nix build . \
     && mkdir -p /build/neovim-flake-closure && cp -R $(nix-store -qR result/) /build/neovim-flake-closure/
-
-
-# Neovim only embedding dependencies
-RUN cd /build && git clone --depth 1 https://github.com/aorith/dotfiles && cd dotfiles/topics/nvim \
-    && nix flake update && nix build . \
-    && mkdir -p /build/neovim-with-deps-closure && cp -R $(nix-store -qR result/) /build/neovim-with-deps-closure/
-
