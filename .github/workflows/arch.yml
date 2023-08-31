@@ -1,8 +1,6 @@
 name: archbox
 on:
-  push:
-    tags:
-      - v*
+  workflow_dispatch:
   schedule:
     - cron: "25 03 * * 2,4,6"
 env:

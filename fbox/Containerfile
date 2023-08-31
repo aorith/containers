@@ -8,10 +8,7 @@ ARG CURRENT_VERSION_REF
 LABEL "io.containers.autoupdate"="registry"
 
 COPY --from=ghcr.io/aorith/nvim-full:latest /build/neovim-flake-closure /nix/store
-COPY --from=ghcr.io/aorith/nvim-full:latest /build/result/bin/nvim /usr/local/bin/nvim
-
-# COPY --from=ghcr.io/aorith/nvim-deps:latest /build/neovim-with-deps-closure /nix/store
-# COPY --from=ghcr.io/aorith/nvim-deps:latest /build/dotfiles/topics/nvim/result/bin/* /usr/local/bin/
+COPY --from=ghcr.io/aorith/nvim-full:latest /build/neovim-flake/result/bin/nvim /usr/local/bin/nvim
 
 RUN dnf install -y \
     "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-${FEDORA_MAJOR_VERSION}.noarch.rpm" \

@@ -1,15 +1,10 @@
 name: fbox
-
 on:
-  push:
-    tags:
-      - v*
+  workflow_dispatch:
   schedule:
     - cron: "35 03 * * 2,4,6"
-
 env:
   IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
-
 jobs:
   push-ghcr:
     name: Build and push fbox image
@@ -27,12 +22,10 @@ jobs:
           - is_stable: false
           - is_stable: true
             major_version: 38
-
     steps:
       # Checkout push-to-registry action GitHub repository
       - name: Checkout Push to Registry action
         uses: actions/checkout@v3
-
       - name: Generate tags
         id: generate-tags
         shell: bash
@@ -53,7 +46,6 @@ jobs:
           done
 
           echo "alias_tags=${BUILD_TAGS[*]}" >> "$GITHUB_OUTPUT"
-
       # Build image using Buildah action
       - name: Build Image
         id: build_image
@@ -70,7 +62,6 @@ jobs:
             CURRENT_VERSION_REF=${{ github.ref_name }}
           labels: ${{ steps.meta.outputs.labels }}
           oci: true
-
       # Push the image to GHCR (Image Registry)
       - name: Push To GHCR
         uses: redhat-actions/push-to-registry@v2
