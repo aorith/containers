@@ -1,16 +1,14 @@
-FROM docker.io/nixos/nix:latest AS nix
-WORKDIR /tmp
-RUN nix build --extra-experimental-features "nix-command flakes" github:aorith/neovim-flake \
-        && mkdir -p /tmp/neovim-closure && cp -R $(nix-store -qR result/) /tmp/neovim-closure/
-
 FROM quay.io/toolbx-images/archlinux-toolbox:latest
 
 ARG CURRENT_VERSION_REF
 
 LABEL "io.containers.autoupdate"="registry"
 
-COPY --from=nix /tmp/neovim-closure /nix/store
-COPY --from=nix /tmp/result/bin/nvim /usr/local/bin/nvim
+# COPY --from=ghcr.io/aorith/nvim:latest /build/neovim-flake-closure /nix/store
+# COPY --from=ghcr.io/aorith/nvim:latest /build/result/bin/nvim /usr/local/bin/nvim
+
+COPY --from=ghcr.io/aorith/nvim:latest /build/neovim-with-deps-closure /nix/store
+COPY --from=ghcr.io/aorith/nvim:latest /build/dotfiles/topics/nvim/result/bin/* /usr/local/bin/
 
 RUN useradd -m -G wheel builder && passwd -d builder \
     && curl -s --fail 'https://aur.archlinux.org/cgit/aur.git/snapshot/yay.tar.gz' -o /tmp/yay.tar.gz \

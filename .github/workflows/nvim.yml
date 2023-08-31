@@ -4,7 +4,7 @@ on:
     tags:
       - v*
   schedule:
-    - cron: "15 03 * * 2,4,6"
+    - cron: "01 03 * * 2,4,6"
 env:
   IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
 jobs:
