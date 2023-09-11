@@ -10,4 +10,4 @@ WORKDIR /build
 # Neovim embedding config, plugins and deps
 RUN cd /build && git clone --depth 1 https://github.com/aorith/neovim-flake && cd neovim-flake \
     && nix flake update && nix build . \
-    && mkdir -p /build/neovim-flake-closure && cp -R $(nix-store -qR result/) /build/neovim-flake-closure/
+    && nix copy . --no-check-sigs --to /build/neovim-flake-closure/

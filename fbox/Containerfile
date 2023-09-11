@@ -7,7 +7,7 @@ ARG CURRENT_VERSION_REF
 
 LABEL "io.containers.autoupdate"="registry"
 
-COPY --from=ghcr.io/aorith/nvim-full:latest /build/neovim-flake-closure /nix/store
+COPY --from=ghcr.io/aorith/nvim-full:latest /build/neovim-flake-closure/nix/store /nix/store
 COPY --from=ghcr.io/aorith/nvim-full:latest /build/neovim-flake/result/bin /tmp/nvim-bin
 RUN for f in /tmp/nvim-bin/*; do ln -sf "$(realpath -- "$f")" /usr/local/bin/"$(basename -- "$f")"; done \
     && rm -rf /tmp/nvim-bin
