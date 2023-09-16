@@ -41,6 +41,7 @@ RUN pacman -Syu --noconfirm && pacman -S --noconfirm \
         iputils \
         jq \
         kubernetes-tools \
+        neovim \
         net-tools \
         nmap \
         python-boto3 \
