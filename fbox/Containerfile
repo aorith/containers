@@ -1,12 +1,5 @@
 # ARGs must be redeclared between FROM statements
 ARG FEDORA_MAJOR_VERSION
-
-FROM docker.io/nixos/nix:latest AS nix
-WORKDIR /tmp
-RUN nix build --extra-experimental-features "nix-command flakes" github:aorith/neovim-flake \
-        && mkdir -p /tmp/neovim-closure && cp -R $(nix-store -qR result/) /tmp/neovim-closure/
-
-ARG FEDORA_MAJOR_VERSION
 FROM registry.fedoraproject.org/fedora:${FEDORA_MAJOR_VERSION}
 
 ARG FEDORA_MAJOR_VERSION
@@ -14,8 +7,10 @@ ARG CURRENT_VERSION_REF
 
 LABEL "io.containers.autoupdate"="registry"
 
-COPY --from=nix /tmp/neovim-closure /nix/store
-COPY --from=nix /tmp/result/bin/nvim /usr/local/bin/nvim
+COPY --from=ghcr.io/aorith/nvim-full:latest /build/neovim-flake-closure/nix/store /nix/store
+COPY --from=ghcr.io/aorith/nvim-full:latest /build/neovim-flake/result/bin /tmp/nvim-bin
+RUN for f in /tmp/nvim-bin/*; do ln -sf "$(realpath -- "$f")" /usr/local/bin/"$(basename -- "$f")"; done \
+    && rm -rf /tmp/nvim-bin
 
 RUN dnf install -y \
     "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-${FEDORA_MAJOR_VERSION}.noarch.rpm" \

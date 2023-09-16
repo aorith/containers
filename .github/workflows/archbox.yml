@@ -1,13 +1,13 @@
-name: fbox
+name: archbox
 on:
   workflow_dispatch:
   schedule:
-    - cron: "35 03 * * 2,4,6"
+    - cron: "25 03 * * 2,4,6"
 env:
   IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
 jobs:
   push-ghcr:
-    name: Build and push fbox image
+    name: Build and push archbox image
     runs-on: ubuntu-22.04
     permissions:
       contents: read
@@ -16,12 +16,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        major_version: [38]
+        major_version: ["latest"]
         include:
-          - image_name: "fbox"
-          - is_stable: false
-          - is_stable: true
-            major_version: 38
+          - image_name: "archbox"
     steps:
       # Checkout push-to-registry action GitHub repository
       - name: Checkout Push to Registry action
@@ -35,10 +32,7 @@ jobs:
           # Generate a timestamp for creating an image version history
           TIMESTAMP="$(date +%Y%m%d)"
 
-          BUILD_TAGS=("${MAJOR_VERSION}" "${MAJOR_VERSION}-${TIMESTAMP}" "latest")
-          if [[ "${{ matrix.is_stable }}" == "true" ]]; then
-              BUILD_TAGS+=("stable")
-          fi
+          BUILD_TAGS=("${MAJOR_VERSION}-${TIMESTAMP}" "latest")
 
           echo "Generated the following build tags: "
           for TAG in "${BUILD_TAGS[@]}"; do
@@ -58,7 +52,6 @@ jobs:
           tags: |
             ${{ steps.generate-tags.outputs.alias_tags }}
           build-args: |
-            FEDORA_MAJOR_VERSION=${{ matrix.major_version }}
             CURRENT_VERSION_REF=${{ github.ref_name }}
           labels: ${{ steps.meta.outputs.labels }}
           oci: true

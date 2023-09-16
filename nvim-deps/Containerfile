@@ -1,0 +1,9 @@
+FROM docker.io/nixos/nix:latest AS nix
+
+RUN mkdir -p /build && printf 'experimental-features = nix-command flakes\n' >> /etc/nix/nix.conf
+WORKDIR /build
+
+# Neovim only embedding dependencies
+RUN cd /build && git clone --depth 1 https://github.com/aorith/dotfiles && cd dotfiles/topics/nvim \
+    && nix flake update && nix build . \
+    && nix copy . --no-check-sigs --to /build/neovim-with-deps-closure/
