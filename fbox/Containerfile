@@ -7,11 +7,6 @@ ARG CURRENT_VERSION_REF
 
 LABEL "io.containers.autoupdate"="registry"
 
-COPY --from=ghcr.io/aorith/nvim-full:latest /build/neovim-flake-closure/nix/store /nix/store
-COPY --from=ghcr.io/aorith/nvim-full:latest /build/neovim-flake/result/bin /tmp/nvim-bin
-RUN for f in /tmp/nvim-bin/*; do ln -sf "$(realpath -- "$f")" /usr/local/bin/"$(basename -- "$f")"; done \
-    && rm -rf /tmp/nvim-bin
-
 RUN dnf install -y \
     "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-${FEDORA_MAJOR_VERSION}.noarch.rpm" \
     "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${FEDORA_MAJOR_VERSION}.noarch.rpm" \
@@ -29,7 +24,6 @@ RUN printf "\nfastestmirror=True\nmax_parallel_downloads=10\n" >> "/etc/dnf/dnf.
     && dnf install -y $(grep -Ev '^#' /tmp/dnf-packages) "@Development Tools" \
     && curl -L -o /usr/local/bin/yq "https://github.com/mikefarah/yq/releases/download/v4.34.1/yq_linux_amd64" \
     && chmod +x /usr/local/bin/yq \
-    && dnf copr enable -y atim/starship && dnf install -y starship \
     && dnf clean all \
     && rm -rf /tmp/* \
     && echo "${FEDORA_MAJOR_VERSION}-${CURRENT_VERSION_REF}" > /CURRENT_VERSION.txt \

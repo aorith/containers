@@ -4,11 +4,6 @@ ARG CURRENT_VERSION_REF
 
 LABEL "io.containers.autoupdate"="registry"
 
-COPY --from=ghcr.io/aorith/nvim-deps:latest /build/neovim-with-deps-closure/nix/store /nix/store
-COPY --from=ghcr.io/aorith/nvim-deps:latest /build/dotfiles/topics/nvim/result/bin /tmp/nvim-bin
-RUN for f in /tmp/nvim-bin/*; do ln -sf "$(realpath -- "$f")" /usr/local/bin/"$(basename -- "$f")"; done \
-    && rm -rf /tmp/nvim-bin
-
 RUN ln -s /usr/bin/distrobox-host-exec /usr/local/bin/rpm-ostree \
     && ln -s /usr/bin/distrobox-host-exec /usr/local/bin/podman \
     && ln -s /usr/bin/distrobox-host-exec /usr/local/bin/docker \
@@ -27,7 +22,6 @@ RUN pacman -Syu --noconfirm && pacman -S --noconfirm \
         iproute2 \
         iputils \
         kubernetes-tools \
-        neovim \
         net-tools \
         nmap \
         python-boto3 \
@@ -35,7 +29,6 @@ RUN pacman -Syu --noconfirm && pacman -S --noconfirm \
         python-urllib3 \
         rsync \
         skopeo \
-        starship \
         tmux \
         vim \
         yq \
