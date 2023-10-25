@@ -2,7 +2,6 @@ dnf-plugins-core
 
 # lang
 glibc-langpack-en
-glibc-langpack-es
 
 acpi
 bash-completion
@@ -28,9 +27,6 @@ less
 lm_sensors
 lsof
 make
-man
-man-db
-man-pages
 neofetch
 net-tools
 nmap
