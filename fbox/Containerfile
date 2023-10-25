@@ -18,6 +18,10 @@ RUN dnf install -y \
     && ln -s /usr/bin/distrobox-host-exec /usr/local/bin/wl-paste \
     && ln -s /usr/bin/distrobox-host-exec /usr/local/bin/xclip
 
+RUN rpm --import https://packages.microsoft.com/keys/microsoft.asc \
+    && sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo' \
+    && dnf check-update -y && dnf install code -y
+
 COPY ./dnf-packages /tmp/
 RUN printf "\nfastestmirror=True\nmax_parallel_downloads=10\n" >> "/etc/dnf/dnf.conf" \
     && dnf update -y --refresh \
