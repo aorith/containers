@@ -1,6 +1,6 @@
 # ARGs must be redeclared between FROM statements
 ARG FEDORA_MAJOR_VERSION
-FROM registry.fedoraproject.org/fedora:${FEDORA_MAJOR_VERSION}
+FROM quay.io/fedora/fedora:${FEDORA_MAJOR_VERSION}
 
 ARG FEDORA_MAJOR_VERSION
 ARG CURRENT_VERSION_REF

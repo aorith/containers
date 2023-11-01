@@ -1,8 +1,5 @@
 dnf-plugins-core
 
-# lang
-glibc-langpack-en
-
 acpi
 bash-completion
 bat
@@ -51,20 +48,6 @@ p7zip
 p7zip-plugins
 unzip
 zstd
-
-# pyenv
-bzip2
-bzip2-devel
-findutils
-libffi-devel
-openssl-devel
-readline-devel
-sqlite
-sqlite-devel
-tk-devel
-xz
-xz-devel
-zlib-devel
 
 # distrobox
 diffutils
