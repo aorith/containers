@@ -1,11 +1,10 @@
 dnf-plugins-core
 
-acpi
+ansible
 bash-completion
 bat
 bc
 binwalk
-ctags
 curl
 devscripts
 dos2unix
@@ -21,24 +20,20 @@ iputils
 jq
 kubernetes-client
 less
-lm_sensors
 lsof
 make
 neofetch
 net-tools
 nmap
 openssl
-powertop
 ripgrep
 rsync
 skopeo
 sudo
 tcpdump
-tig
+telnet
 tmux
 tree
-vim
-vte-profile
 wget
 
 # Archiving
