@@ -1,9 +1,11 @@
 dnf-plugins-core
 
 ansible
+awscli2
 bash-completion
 bat
 bc
+bind-utils
 binwalk
 curl
 devscripts
@@ -26,6 +28,7 @@ neofetch
 net-tools
 nmap
 openssl
+pandoc
 ripgrep
 rsync
 skopeo
@@ -60,5 +63,14 @@ genisoimage
 python3-boto3
 python3-requests
 python3-urllib3
+
+# neovim
+neovim
+tree-sitter-cli
+libstdc++
+
+# other
+g++
+gcc
 
 # vim: ft=conf

@@ -1,30 +1,41 @@
 # ARGs must be redeclared between FROM statements
 ARG FEDORA_MAJOR_VERSION
-FROM quay.io/fedora/fedora:${FEDORA_MAJOR_VERSION}
+FROM quay.io/toolbx-images/fedora-toolbox:${FEDORA_MAJOR_VERSION}
 
 ARG FEDORA_MAJOR_VERSION
 ARG CURRENT_VERSION_REF
 
 LABEL "io.containers.autoupdate"="registry"
 
-RUN dnf install -y \
+RUN printf "\nfastestmirror=True\nmax_parallel_downloads=10\n" >> "/etc/dnf/dnf.conf" \
+    && dnf -y distro-sync \
+    && dnf install -y \
     "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-${FEDORA_MAJOR_VERSION}.noarch.rpm" \
     "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${FEDORA_MAJOR_VERSION}.noarch.rpm" \
-    && ln -s /usr/bin/distrobox-host-exec /usr/local/bin/rpm-ostree \
-    && ln -s /usr/bin/distrobox-host-exec /usr/local/bin/podman \
-    && ln -s /usr/bin/distrobox-host-exec /usr/local/bin/docker \
-    && ln -s /usr/bin/distrobox-host-exec /usr/local/bin/flatpak \
-    && ln -s /usr/bin/distrobox-host-exec /usr/local/bin/wl-copy \
-    && ln -s /usr/bin/distrobox-host-exec /usr/local/bin/wl-paste \
-    && ln -s /usr/bin/distrobox-host-exec /usr/local/bin/xclip
+    && host_bins=( \
+        "flatpak" \
+        "firefox" \
+        "rpm-ostree" \
+        "podman" \
+        "docker" \
+        "wl-copy" \
+        "wl-paste" \
+        "xclip" \
+        "systemctl" \
+        "virsh" \
+        "virt-install" \
+        "xdg-open" \
+        ); \
+    for f in "${host_bins[@]}"; do \
+        ln -s /usr/bin/distrobox-host-exec /usr/local/bin/"$f"; \
+    done
 
 RUN rpm --import https://packages.microsoft.com/keys/microsoft.asc \
     && sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo' \
-    && dnf update -y && dnf install code -y
+    && dnf update -y && dnf install code -y --nodocs --setopt install_weak_deps=false
 
 COPY ./dnf-packages /tmp/
-RUN printf "\nfastestmirror=True\nmax_parallel_downloads=10\n" >> "/etc/dnf/dnf.conf" \
-    && dnf update -y --refresh \
+RUN dnf update -y --refresh \
     && dnf install -y $(grep -Ev '^#' /tmp/dnf-packages) "@Development Tools" \
     && dnf upgrade -y \
     && dnf clean all \
