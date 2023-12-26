@@ -4,34 +4,108 @@ ARG CURRENT_VERSION_REF
 
 LABEL "io.containers.autoupdate"="registry"
 
-RUN ln -s /usr/bin/distrobox-host-exec /usr/local/bin/rpm-ostree \
-    && ln -s /usr/bin/distrobox-host-exec /usr/local/bin/podman \
-    && ln -s /usr/bin/distrobox-host-exec /usr/local/bin/docker \
-    && ln -s /usr/bin/distrobox-host-exec /usr/local/bin/flatpak \
-    && ln -s /usr/bin/distrobox-host-exec /usr/local/bin/wl-copy \
-    && ln -s /usr/bin/distrobox-host-exec /usr/local/bin/wl-paste \
-    && ln -s /usr/bin/distrobox-host-exec /usr/local/bin/xclip
+RUN host_bins=( \
+        "flatpak" \
+        "firefox" \
+        "rpm-ostree" \
+        "podman" \
+        "docker" \
+        "wl-copy" \
+        "wl-paste" \
+        "xclip" \
+        "systemctl" \
+        "virsh" \
+        "virt-install" \
+        "xdg-open" \
+        ); \
+    for f in "${host_bins[@]}"; do \
+        ln -s /usr/bin/distrobox-host-exec /usr/local/bin/"$f"; \
+    done
 
-RUN pacman -Syu --noconfirm && pacman -S --noconfirm \
+# Install yay
+RUN RUN pacman -Syu --noprogressbar --noconfirm --needed cmake clang unzip ninja git curl wget \
+    && git clone https://aur.archlinux.org/yay.git \
+    && cd yay \
+    && makepkg -si --noprogressbar --noconfirm \
+    && cd .. \
+    && rm -Rf yay
+
+# General tools
+RUN pacman -Syu --noprogressbar --noconfirm --needed \
+        age \
+        aws-cli-v2 \
         bash \
         bash-completion \
         bat \
         bc \
+        code \
         dos2unix \
+        fd \
+        fzf \
+        git-delta \
+        gitui \
         go \
         iproute2 \
         iputils \
         kubernetes-tools \
+        lazydocker \
         net-tools \
         nmap \
+        pandoc-cli \
         python-boto3 \
         python-requests \
         python-urllib3 \
+        rclone \
+        ripgrep \
         rsync \
         skopeo \
+        sops \
+        starship \
+        terraform \
+        the_silver_searcher \
         tmux \
         vim \
         yq \
+    && true
+
+# Neovim, formatters, linters, etc
+RUN yay -Syu --noprogressbar --noconfirm --needed \
+        gcc \
+        golangci-lint-bin \
+        neovim \
+        prettier \
+        proselint \
+        python-black \
+        python-djlint \
+        python-isort \
+        ruff \
+        shellcheck \
+        shfmt \
+        stylua \
+        tree-sitter \
+        tree-sitter-cli \
+        typos \
+        vale \
+        yamlfmt \
+        yamllint \
+    && true
+
+# Neovim, language servers
+RUN yay -Syu --noprogressbar --noconfirm --needed \
+        bash-language-server \
+        gopls \
+        lua-language-server \
+        marksman \
+        pyright \
+        ruff-lsp \
+        terraform-ls \
+        tflint-bin \
+        typescript-language-server \
+        vscode-css-languageserver \
+        vscode-html-languageserver \
+        vscode-json-languageserver \
+        vscode-markdown-languageserver \
+        yaml-language-server \
     && true
 
 RUN pacman -Sc --noconfirm \
