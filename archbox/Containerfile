@@ -66,45 +66,13 @@ RUN pacman -Syu --noprogressbar --noconfirm --needed \
         yq \
     && true
 
-# Neovim, formatters, linters, etc
+# Neovim
 RUN yay -Syu --noprogressbar --noconfirm --needed \
         gcc \
-        golangci-lint-bin \
         lazygit \
         neovim \
-        prettier \
-        proselint \
-        python-black \
-        python-djlint \
-        python-isort \
-        ruff \
-        shellcheck \
-        shfmt \
-        stylua \
         tree-sitter \
         tree-sitter-cli \
-        typos \
-        vale \
-        yamlfmt \
-        yamllint \
-    && true
-
-# Neovim, language servers
-RUN yay -Syu --noprogressbar --noconfirm --needed \
-        bash-language-server \
-        gopls \
-        lua-language-server \
-        marksman \
-        pyright \
-        ruff-lsp \
-        terraform-ls \
-        tflint-bin \
-        typescript-language-server \
-        vscode-css-languageserver \
-        vscode-html-languageserver \
-        vscode-json-languageserver \
-        vscode-markdown-languageserver \
-        yaml-language-server \
     && true
 
 RUN pacman -Sc --noconfirm \
