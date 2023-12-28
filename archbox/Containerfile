@@ -23,7 +23,7 @@ RUN host_bins=( \
     done
 
 # Install yay
-RUN RUN pacman -Syu --noprogressbar --noconfirm --needed cmake clang unzip ninja git curl wget \
+RUN pacman -Syu --noprogressbar --noconfirm --needed cmake clang unzip ninja git curl wget \
     && git clone https://aur.archlinux.org/yay.git \
     && cd yay \
     && makepkg -si --noprogressbar --noconfirm \
