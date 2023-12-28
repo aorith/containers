@@ -47,7 +47,6 @@ RUN pacman -Syu --noprogressbar --noconfirm --needed \
         iproute2 \
         iputils \
         kubernetes-tools \
-        lazydocker \
         net-tools \
         nmap \
         pandoc-cli \
@@ -71,6 +70,7 @@ RUN pacman -Syu --noprogressbar --noconfirm --needed \
 RUN yay -Syu --noprogressbar --noconfirm --needed \
         gcc \
         golangci-lint-bin \
+        lazygit \
         neovim \
         prettier \
         proselint \
