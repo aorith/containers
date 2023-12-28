@@ -5,6 +5,8 @@ FROM quay.io/toolbx-images/fedora-toolbox:${FEDORA_MAJOR_VERSION}
 ARG FEDORA_MAJOR_VERSION
 ARG CURRENT_VERSION_REF
 
+ENV CONTAINER_ID=fbox
+
 LABEL "io.containers.autoupdate"="registry"
 
 RUN printf "\nfastestmirror=True\nmax_parallel_downloads=10\n" >> "/etc/dnf/dnf.conf" \

@@ -2,6 +2,8 @@ FROM quay.io/toolbx-images/archlinux-toolbox:latest
 
 ARG CURRENT_VERSION_REF
 
+ENV CONTAINER_ID=archbox
+
 LABEL "io.containers.autoupdate"="registry"
 
 RUN host_bins=( \
