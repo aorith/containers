@@ -1,5 +1,8 @@
 FROM quay.io/podman/stable:latest
 
-RUN dnf install -y --nodocs --setopt install_weak_deps=false buildah skopeo --exclude container-selinux \
+RUN dnf install -y --nodocs --setopt install_weak_deps=false --exclude container-selinux \
+        buildah \
+        skopeo \
+        jq \
     && dnf clean all \
     && rm -rf /var/log/dnf* /var/log/yum.* /var/cache
