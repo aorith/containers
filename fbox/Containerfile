@@ -38,7 +38,7 @@ RUN printf "\nfastestmirror=True\nmax_parallel_downloads=10\n" >> "/etc/dnf/dnf.
 
 COPY ./dnf-packages /tmp/
 RUN dnf update -y --refresh \
-    && dnf install -y $(grep -Ev '^#' /tmp/dnf-packages) "@Development Tools" \
+    && dnf install -y $(grep -Ev '^#' /tmp/dnf-packages | sort | uniq) "@Development Tools" \
     && dnf upgrade -y \
     && dnf clean all \
     && rm -rf /tmp/* \
