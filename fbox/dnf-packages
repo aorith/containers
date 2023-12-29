@@ -115,6 +115,7 @@ python3-requests
 python3-urllib3
 
 # neovim
+vim
 neovim
 tree-sitter-cli
 nodejs
