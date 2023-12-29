@@ -38,6 +38,9 @@ tmux
 tree
 wget
 
+# From hashicorp repo
+terraform
+
 # Archiving
 cabextract
 lzip
