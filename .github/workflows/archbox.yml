@@ -2,7 +2,7 @@ name: archbox
 on:
   workflow_dispatch:
   schedule:
-    - cron: "25 03 * * 2,4,6"
+    - cron: "25 03 * * 6"
 env:
   IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
 jobs:
