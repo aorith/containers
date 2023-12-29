@@ -32,9 +32,9 @@ RUN printf "\nfastestmirror=True\nmax_parallel_downloads=10\n" >> "/etc/dnf/dnf.
         ln -s /usr/bin/distrobox-host-exec /usr/local/bin/"$f"; \
     done
 
-RUN rpm --import https://packages.microsoft.com/keys/microsoft.asc \
-    && sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo' \
-    && dnf update -y && dnf install code -y --nodocs --setopt install_weak_deps=false
+#RUN rpm --import https://packages.microsoft.com/keys/microsoft.asc \
+#    && sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo' \
+#    && dnf update -y && dnf install code -y --nodocs --setopt install_weak_deps=false
 
 COPY ./dnf-packages /tmp/
 RUN dnf update -y --refresh \
@@ -43,4 +43,4 @@ RUN dnf update -y --refresh \
     && dnf clean all \
     && rm -rf /tmp/* \
     && echo "${FEDORA_MAJOR_VERSION}-${CURRENT_VERSION_REF}" > /CURRENT_VERSION.txt \
-    echo "$(date +'%Y-%m-%d %H:%M:%S')" > /BUILD_DATE.txt
+    && echo "$(date +'%Y-%m-%d %H:%M:%S')" > /BUILD_DATE.txt
