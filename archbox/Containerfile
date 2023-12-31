@@ -7,17 +7,19 @@ ENV CONTAINER_ID=archbox
 LABEL "io.containers.autoupdate"="registry"
 
 RUN host_bins=( \
-        "flatpak" \
-        "firefox" \
-        "rpm-ostree" \
-        "podman" \
         "docker" \
+        "firefox" \
+        "flatpak" \
+        "mpv" \
+        "podman" \
+        "rpm-ostree" \
+        "systemctl" \
+        "vcl" \
+        "virsh" \
+        "virt-install" \
         "wl-copy" \
         "wl-paste" \
         "xclip" \
-        "systemctl" \
-        "virsh" \
-        "virt-install" \
         "xdg-open" \
         ); \
     for f in "${host_bins[@]}"; do \
