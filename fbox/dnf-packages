@@ -39,6 +39,11 @@ tmux
 tree
 wget
 
+# zsh
+zsh
+zsh-autosuggestions
+zsh-syntax-highlighting
+
 # From hashicorp repo
 terraform
 
