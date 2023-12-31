@@ -28,6 +28,7 @@ net-tools
 nmap
 openssl
 pandoc
+pass
 ripgrep
 rsync
 skopeo
@@ -55,7 +56,6 @@ bc
 bzip2
 curl
 diffutils
-diffutils
 dnf-plugins-core
 findutils
 glibc-all-langpacks
@@ -75,19 +75,14 @@ mesa-dri-drivers
 mesa-vulkan-drivers
 mtr
 ncurses
-ncurses
 nss-mdns
 openssh-clients
 pam
 passwd
-passwd
 pigz
 pinentry
-pinentry
-procps-ng
 procps-ng
 rsync
-shadow-utils
 shadow-utils
 sudo
 tcpdump
@@ -96,7 +91,6 @@ traceroute
 tree
 tzdata
 unzip
-util-linux
 util-linux
 vte-profile
 vulkan
@@ -107,6 +101,12 @@ words
 xorg-x11-xauth
 xz
 zip
+
+# like find/fd but faster
+bfs
+
+# sound sample translator (gp.nvim)
+sox
 
 # cloud-init / libvirt
 genisoimage
