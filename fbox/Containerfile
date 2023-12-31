@@ -41,6 +41,7 @@ RUN printf "\nfastestmirror=True\nmax_parallel_downloads=10\n" >> "/etc/dnf/dnf.
 COPY ./dnf-packages /tmp/
 RUN dnf update -y --refresh \
     && dnf config-manager --add-repo https://rpm.releases.hashicorp.com/fedora/hashicorp.repo \
+    && dnf -y copr enable atim/starship && dnf install -y starship \
     && dnf install -y $(grep -Ev '^#' /tmp/dnf-packages | sort | uniq) "@Development Tools" \
     && dnf upgrade -y \
     && dnf clean all \
