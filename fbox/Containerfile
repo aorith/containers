@@ -19,6 +19,18 @@ RUN printf "\nfastestmirror=True\nmax_parallel_downloads=10\n" >> "/etc/dnf/dnf.
         "firefox" \
         "flatpak" \
         "mpv" \
+        "nix" \
+        "nix-build" \
+        "nix-channel" \
+        "nix-collect-garbage" \
+        "nix-copy-closure" \
+        "nix-daemon" \
+        "nix-env" \
+        "nix-hash" \
+        "nix-instantiate" \
+        "nix-prefetch-url" \
+        "nix-shell" \
+        "nix-store" \
         "podman" \
         "rpm-ostree" \
         "systemctl" \

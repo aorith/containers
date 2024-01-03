@@ -11,12 +11,24 @@ RUN host_bins=( \
         "firefox" \
         "flatpak" \
         "mpv" \
+        "nix" \
+        "nix-build" \
+        "nix-channel" \
+        "nix-collect-garbage" \
+        "nix-copy-closure" \
+        "nix-daemon" \
+        "nix-env" \
+        "nix-hash" \
+        "nix-instantiate" \
+        "nix-prefetch-url" \
+        "nix-shell" \
+        "nix-store" \
         "podman" \
         "rpm-ostree" \
         "systemctl" \
-        "vcl" \
         "virsh" \
         "virt-install" \
+        "vlc" \
         "wl-copy" \
         "wl-paste" \
         "xclip" \
