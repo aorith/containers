@@ -7,6 +7,7 @@ ENV CONTAINER_ID=archbox
 LABEL "io.containers.autoupdate"="registry"
 
 RUN host_bins=( \
+        "cloud-localds" \
         "docker" \
         "firefox" \
         "flatpak" \
