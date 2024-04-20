@@ -1,0 +1,20 @@
+dnf-plugins-core
+
+bash-completion
+curl
+file
+git
+jq
+less
+make
+ripgrep
+sudo
+tmux
+tree
+
+python3-pip
+
+vim
+neovim
+
+# vim: ft=conf
