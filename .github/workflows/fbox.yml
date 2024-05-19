@@ -16,12 +16,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        major_version: [39]
+        major_version: [40]
         include:
           - image_name: "fbox"
           - is_stable: false
           - is_stable: true
-            major_version: 39
+            major_version: 40
     steps:
       # Checkout push-to-registry action GitHub repository
       - name: Checkout Push to Registry action
