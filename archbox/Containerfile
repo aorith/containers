@@ -1,4 +1,4 @@
-FROM quay.io/toolbx-images/archlinux-toolbox:latest
+FROM quay.io/toolbx/arch-toolbox:latest
 
 ARG CURRENT_VERSION_REF
 
@@ -39,34 +39,20 @@ RUN host_bins=( \
         ln -s /usr/bin/distrobox-host-exec /usr/local/bin/"$f"; \
     done
 
-# Install yay
-RUN pacman -Syu --noprogressbar --noconfirm --needed base-devel git curl wget \
-    && useradd -m -G wheel builder && passwd -d builder && mkdir -p /tmp/yay \
-    && chown -R builder:builder /tmp/yay && echo 'builder ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers \
-    && su - builder -c 'git clone https://aur.archlinux.org/yay.git /tmp/yay/yay && cd /tmp/yay/yay && makepkg -si --noprogressbar --noconfirm' \
-    && rm -Rf /tmp/yay && userdel -rf builder
-
 # General tools
 RUN pacman -Syu --noprogressbar --noconfirm --needed \
         age \
-        aws-cli-v2 \
         bash \
         bash-completion \
         bat \
         bc \
-        code \
         dos2unix \
         fd \
         fzf \
-        git-delta \
-        gitui \
-        go \
-        iproute2 \
         iputils \
         kubernetes-tools \
         net-tools \
         nmap \
-        pandoc-cli \
         python-boto3 \
         python-requests \
         python-urllib3 \
@@ -75,21 +61,10 @@ RUN pacman -Syu --noprogressbar --noconfirm --needed \
         rsync \
         skopeo \
         sops \
-        starship \
         terraform \
         the_silver_searcher \
         tmux \
         vim \
-        yq \
-    && true
-
-# Neovim
-RUN yay -Syu --noprogressbar --noconfirm --needed \
-        gcc \
-        lazygit \
-        neovim \
-        tree-sitter \
-        tree-sitter-cli \
     && true
 
 RUN pacman -Sc --noconfirm \

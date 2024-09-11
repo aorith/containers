@@ -14,10 +14,11 @@ jobs:
       contents: read
       packages: write
       id-token: write
+    continue-on-error: true
     strategy:
       max-parallel: 1
+      fail-fast: true
       matrix:
-        major_version: [40]
         include:
         - image_name: "fbox"
           major_version: 40
@@ -25,10 +26,9 @@ jobs:
           major_version: 40
         - image_name: "archbox"
     steps:
-    # Checkout push-to-registry action GitHub repository
     - name: Checkout Push to Registry action
       uses: actions/checkout@v4
-    # Build image using Buildah action
+
     - name: Build Image
       id: build_image
       uses: redhat-actions/buildah-build@v2
@@ -44,7 +44,7 @@ jobs:
           CURRENT_VERSION_REF=${{ github.ref_name }}
         labels: ${{ steps.meta.outputs.labels }}
         oci: true
-    # Push the image to GHCR (Image Registry)
+
     - name: Push To GHCR
       uses: redhat-actions/push-to-registry@v2
       id: push
