@@ -1,3 +1,38 @@
+# Essentials
+ShellCheck
+bash-completion
+bind-utils
+ca-certificates
+colordiff
+expect
+file
+flatpak-spawn
+flatpak-xdg-utils
+g++
+gcc
+git
+glibc-langpack-en
+gnupg
+jq
+libsecret
+lz4
+make
+netcat
+nmap
+openssh-clients
+p7zip-plugins
+pandoc
+patch
+prename
+screen
+telnet
+tree
+unrar
+unzip
+vim
+wget
+
+# Extras
 dnf-plugins-core
 
 ansible
