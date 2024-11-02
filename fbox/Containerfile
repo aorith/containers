@@ -6,8 +6,7 @@ ARG CURRENT_VERSION_REF
 
 ENV CONTAINER_ID=fbox
 
-LABEL com.github.containers.toolbox="true" \
-      io.containers.autoupdate="registry" \
+LABEL io.containers.autoupdate="registry" \
       maintainer="aomanu+containers@gmail.com"
 
 RUN sed -i "s/enabled=1/enabled=0/" /etc/yum.repos.d/fedora-cisco-openh264.repo \
@@ -16,11 +15,6 @@ RUN sed -i "s/enabled=1/enabled=0/" /etc/yum.repos.d/fedora-cisco-openh264.repo 
     "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm" \
     "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
 
-COPY host-exec /usr/local/bin/host-exec
-COPY host-exec.txt /
-RUN grep -v '^#' /host-exec.txt | sort | uniq | while read -r b; do ln -sf /usr/local/bin/host-exec /usr/local/bin/"$b"; done \
-    && rm /host-exec.txt
-
 COPY packages /
 RUN dnf update -y --refresh \
     && grep -v '^#' /packages | sort | uniq | xargs dnf -y install --setopt=install_weak_deps=False \
@@ -28,4 +22,9 @@ RUN dnf update -y --refresh \
     && dnf upgrade -y \
     && dnf clean all \
     && rm -rf /tmp/* \
-    && printf '%s\n%s' "${FEDORA_MAJOR_VERSION}-${CURRENT_VERSION_REF}" "$(date +'%Y-%m-%d %H:%M:%S')" > /CURRENT_VERSION
+    && printf '%s\n%s\n' "$(rpm -E %fedora)-${CURRENT_VERSION_REF}" "$(date +'%Y-%m-%d %H:%M:%S')" > /CURRENT_VERSION
+
+COPY host-exec /usr/local/bin/host-exec
+COPY host-exec.txt /
+RUN grep -v '^#' /host-exec.txt | sort | uniq | while read -r b; do ln -sf /usr/local/bin/host-exec /usr/local/bin/"$b"; done \
+    && rm /host-exec.txt
