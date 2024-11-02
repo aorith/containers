@@ -17,7 +17,7 @@ RUN sed -i "s/enabled=1/enabled=0/" /etc/yum.repos.d/fedora-cisco-openh264.repo 
 
 COPY packages /
 RUN dnf update -y --refresh \
-    && grep -v '^#' /packages | sort | uniq | xargs dnf -y install --setopt=install_weak_deps=False \
+    && sed 's/#.*//g' /packages | sort | uniq | xargs dnf -y install --setopt=install_weak_deps=False \
     && rm /packages \
     && dnf upgrade -y \
     && dnf clean all \
