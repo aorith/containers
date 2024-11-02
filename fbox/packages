@@ -85,6 +85,7 @@ neovim
 nodejs-npm
 tree-sitter-cli
 vim
+libicu # required by marksman lsp
 
 # Extra
 yt-dlp
