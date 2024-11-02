@@ -27,6 +27,7 @@ gnupg
 golang
 gzip
 helm
+host-spawn
 iproute
 iputils
 java-latest-openjdk
