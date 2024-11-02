@@ -6,6 +6,7 @@ espeak-ng
 firefox
 flatpak
 gsettings
+nix
 notify-send
 podman
 podman-compose
