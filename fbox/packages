@@ -1,40 +1,4 @@
 # Essentials
-ShellCheck
-bash-completion
-bind-utils
-ca-certificates
-colordiff
-expect
-file
-flatpak-spawn
-flatpak-xdg-utils
-g++
-gcc
-git
-glibc-langpack-en
-gnupg
-jq
-libsecret
-lz4
-make
-netcat
-nmap
-openssh-clients
-p7zip-plugins
-pandoc
-patch
-prename
-screen
-telnet
-tree
-unrar
-unzip
-vim
-wget
-
-# Extras
-dnf-plugins-core
-
 ansible
 awscli2
 bash-completion
@@ -42,17 +6,24 @@ bat
 bc
 bind-utils
 binwalk
+ca-certificates
 cabextract
+colordiff
 curl
 devscripts
 diffutils
 dos2unix
+expect
 fd-find
 file
+flatpak-spawn
+flatpak-xdg-utils
 fzf
+g++
+gcc
 git
 git-credential-libsecret
-gnupg2
+gnupg
 golang
 gzip
 helm
@@ -63,37 +34,39 @@ jq
 keyutils
 kubernetes-client
 less
+libsecret
 lsof
+lz4
 lzip
 make
-neofetch
 net-tools
+netcat
 nmap
+openssh-clients
 openssl
 p7zip
 p7zip-plugins
 pandoc
 pass
+patch
 pigz
+prename
 ripgrep
 rsync
+screen
 skopeo
 sudo
 tcpdump
 telnet
 tmux
 tree
+unrar
 unzip
 util-linux
+vim
 wget
 whois
 zstd
-
-# From hashicorp repo
-terraform
-
-# sound sample translator (gp.nvim)
-sox
 
 # cloud-init / libvirt
 genisoimage
@@ -112,5 +85,8 @@ neovim
 nodejs
 tree-sitter-cli
 vim
+
+# Extra
+yt-dlp
 
 # vim: ft=conf

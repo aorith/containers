@@ -1,6 +1,5 @@
 ARG FEDORA_MAJOR_VERSION=latest
 
-#FROM quay.io/toolbx-images/fedora-toolbox:${FEDORA_MAJOR_VERSION}
 FROM registry.fedoraproject.org/fedora-toolbox:${FEDORA_MAJOR_VERSION}
 
 ARG CURRENT_VERSION_REF
@@ -10,20 +9,20 @@ ENV CONTAINER_ID=fbox
 LABEL com.github.containers.toolbox="true" \
       maintainer="aomanu+containers@gmail.com"
 
-RUN printf "\nfastestmirror=True\nmax_parallel_downloads=10\n" >> "/etc/dnf/dnf.conf" \
-    && dnf -y distro-sync \
-    && dnf install -y \
+RUN sed -i "s/enabled=1/enabled=0/" /etc/yum.repos.d/fedora-cisco-openh264.repo \
+    && dnf -y update \
+    && dnf -y install  \
     "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm" \
     "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
 
-COPY host-exec /
-RUN grep -v '^#' /host-exec | sort | uniq | while read -r b; do ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/"$b"; done \
-    && rm /host-exec
+COPY host-exec /usr/local/bin/host-exec
+COPY host-exec.txt /
+RUN grep -v '^#' /host-exec.txt | sort | uniq | while read -r b; do ln -sf /usr/local/bin/host-exec /usr/local/bin/"$b"; done \
+    && rm /host-exec.txt
 
 COPY packages /
 RUN dnf update -y --refresh \
-    && dnf config-manager --add-repo https://rpm.releases.hashicorp.com/fedora/hashicorp.repo \
-    && grep -v '^#' /packages | sort | uniq | xargs dnf install --setopt=install_weak_deps=False -y "@Development Tools" \
+    && grep -v '^#' /packages | sort | uniq | xargs dnf -y install --setopt=install_weak_deps=False \
     && rm /packages \
     && dnf upgrade -y \
     && dnf clean all \
