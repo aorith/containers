@@ -7,6 +7,7 @@ firefox
 flatpak
 gsettings
 nix
+nix-instantiate
 notify-send
 podman
 podman-compose
