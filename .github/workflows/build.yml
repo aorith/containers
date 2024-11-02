@@ -23,9 +23,6 @@ jobs:
         include:
         - image_name: "fbox"
           major_version: 41
-        - image_name: "fbox-slim"
-          major_version: 41
-        - image_name: "archbox"
 
     steps:
     - name: Checkout Push to Registry action
