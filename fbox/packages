@@ -82,7 +82,7 @@ cargo
 gcc
 luarocks
 neovim
-nodejs
+nodejs-npm
 tree-sitter-cli
 vim
 
