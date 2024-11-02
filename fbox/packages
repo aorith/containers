@@ -23,6 +23,7 @@ g++
 gcc
 git
 git-credential-libsecret
+git-delta
 gnupg
 golang
 gzip
