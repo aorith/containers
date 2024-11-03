@@ -16,8 +16,5 @@ rpm-ostree
 systemctl
 virsh
 virt-install
-wl-copy
-wl-paste
-xclip
 xdg-email
 xdg-open

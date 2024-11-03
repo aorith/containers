@@ -68,6 +68,8 @@ util-linux
 vim
 wget
 whois
+wl-clipboard
+xclip
 zstd
 
 # cloud-init / libvirt

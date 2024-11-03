@@ -24,6 +24,11 @@ RUN dnf update -y --refresh \
     && rm -rf /tmp/* \
     && printf '%s\n%s\n' "$(rpm -E %fedora)-${CURRENT_VERSION_REF}" "$(date +'%Y-%m-%d %H:%M:%S')" > /CURRENT_VERSION
 
+
+COPY extra.d/ /tmp/extra.d
+RUN find /tmp/extra.d -type f -exec bash {} \; \
+    && rm -rf /tmp/extra.d
+
 COPY host-shims /
 RUN grep -v '^#' /host-shims | sort | uniq | while read -r b; do ln -sf "$(which host-spawn)" /usr/local/bin/"$b"; done \
     && rm /host-shims
