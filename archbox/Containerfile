@@ -1,3 +1,19 @@
+FROM docker.io/library/archlinux:base-devel AS builder
+
+RUN pacman -Syu --noconfirm git \
+    && useradd -m build \
+    && echo 'build ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/build
+
+USER build
+RUN mkdir -p /tmp/build /tmp/pkgs
+WORKDIR /tmp/build
+
+RUN git clone https://aur.archlinux.org/neovim-git.git \
+    && cd neovim-git \
+    && makepkg --clean --force --syncdeps --noconfirm --noprogressbar \
+    && mv neovim*.pkg* /tmp/pkgs/ \
+    && cd /tmp/build
+
 FROM quay.io/toolbx/arch-toolbox:latest
 
 ENV CONTAINER_ID=archbox
@@ -8,6 +24,11 @@ LABEL io.containers.autoupdate="registry" \
 COPY packages /
 RUN sed 's/#.*//g' /packages | sort | uniq | xargs | pacman -Syu --needed --noconfirm \
     && rm /packages
+
+RUN mkdir -p /tmp/pkgs
+COPY --from=builder /tmp/pkgs/*.pkg* /tmp/pkgs/
+RUN pacman -U --noconfirm /tmp/pkgs/*.pkg* \
+    && rm -rf /tmp/pkgs
 
 COPY extra.d/ /tmp/extra.d
 RUN find /tmp/extra.d -type f -exec bash {} \; \

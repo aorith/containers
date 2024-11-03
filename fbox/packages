@@ -26,6 +26,7 @@ git-credential-libsecret
 git-delta
 gnupg
 golang
+gron
 gzip
 helm
 host-spawn
@@ -70,6 +71,7 @@ wget
 whois
 wl-clipboard
 xclip
+yq
 zstd
 
 # cloud-init / libvirt
