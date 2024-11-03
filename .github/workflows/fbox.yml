@@ -1,0 +1,63 @@
+name: fbox
+on:
+  workflow_dispatch:
+  schedule:
+  - cron: "01 03 * * 5"
+
+env:
+  IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
+
+jobs:
+  push-ghcr:
+    name: Build and push container images
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    continue-on-error: true
+    strategy:
+      max-parallel: 1
+      fail-fast: true
+      matrix:
+        include:
+        - image_name: "fbox"
+          major_version: 41
+
+    steps:
+    - name: Checkout Push to Registry action
+      uses: actions/checkout@v4
+
+    - name: Build Image
+      id: build_image
+      uses: redhat-actions/buildah-build@v2
+      with:
+        context: ${{ matrix.image_name }}
+        containerfiles: |
+          ${{ matrix.image_name }}/Containerfile
+        image: ${{ matrix.image_name }}
+        tags: |
+          latest
+        build-args: |
+          FEDORA_MAJOR_VERSION=${{ matrix.major_version }}
+          CURRENT_VERSION_REF=${{ github.ref_name }}
+        labels: ${{ steps.meta.outputs.labels }}
+        layers: false
+        oci: true
+
+    - name: Push To GHCR
+      uses: redhat-actions/push-to-registry@v2
+      id: push
+      if: github.event_name != 'pull_request'
+      env:
+        REGISTRY_USER: ${{ github.actor }}
+        REGISTRY_PASSWORD: ${{ github.token }}
+      with:
+        image: ${{ steps.build_image.outputs.image }}
+        tags: ${{ steps.build_image.outputs.tags }}
+        registry: ${{ env.IMAGE_REGISTRY }}
+        username: ${{ env.REGISTRY_USER }}
+        password: ${{ env.REGISTRY_PASSWORD }}
+        extra-args: |
+          --compression-format=zstd:chunked
+          --compression-level=19

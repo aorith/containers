@@ -1,0 +1,18 @@
+FROM quay.io/toolbx/arch-toolbox:latest
+
+ENV CONTAINER_ID=archbox
+
+LABEL io.containers.autoupdate="registry" \
+      maintainer="aomanu+containers@gmail.com"
+
+COPY packages /
+RUN sed 's/#.*//g' /packages | sort | uniq | xargs | pacman -Syu --needed --noconfirm \
+    && rm /packages
+
+COPY extra.d/ /tmp/extra.d
+RUN find /tmp/extra.d -type f -exec bash {} \; \
+    && rm -rf /tmp/extra.d
+
+COPY host-shims /
+RUN grep -v '^#' /host-shims | sort | uniq | while read -r b; do ln -sf "$(which host-spawn)" /usr/local/bin/"$b"; done \
+    && rm /host-shims

@@ -1,8 +1,8 @@
-name: containers
+name: archbox
 on:
   workflow_dispatch:
   schedule:
-  - cron: "01 03 * * 5"
+  - cron: "11 03 * * 5"
 
 env:
   IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
@@ -21,8 +21,7 @@ jobs:
       fail-fast: true
       matrix:
         include:
-        - image_name: "fbox"
-          major_version: 41
+        - image_name: "archbox"
 
     steps:
     - name: Checkout Push to Registry action
