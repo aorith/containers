@@ -4,6 +4,7 @@ docker
 docker-compose
 espeak-ng
 firefox
+flameshot
 flatpak
 gsettings
 nix
