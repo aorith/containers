@@ -15,6 +15,9 @@ RUN sed -i "s/enabled=1/enabled=0/" /etc/yum.repos.d/fedora-cisco-openh264.repo 
     "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm" \
     "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
 
+RUN dnf config-manager addrepo --from-repofile "https://rpm.releases.hashicorp.com/fedora/hashicorp.repo" \
+            && dnf -y install terraform
+
 COPY packages /
 RUN dnf update -y --refresh \
     && sed 's/#.*//g' /packages | sort | uniq | xargs dnf -y install --setopt=install_weak_deps=False \
@@ -23,7 +26,6 @@ RUN dnf update -y --refresh \
     && dnf clean all \
     && rm -rf /tmp/* \
     && printf '%s\n%s\n' "$(rpm -E %fedora)-${CURRENT_VERSION_REF}" "$(date +'%Y-%m-%d %H:%M:%S')" > /CURRENT_VERSION
-
 
 COPY extra.d/ /tmp/extra.d
 RUN find /tmp/extra.d -type f -exec bash {} \; \
