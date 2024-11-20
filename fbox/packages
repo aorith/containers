@@ -94,6 +94,7 @@ vim
 libicu # required by marksman lsp
 
 # Extra
+tealdeer
 yt-dlp
 
 # vim: ft=conf
