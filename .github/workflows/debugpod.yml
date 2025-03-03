@@ -34,6 +34,6 @@ jobs:
           context: ${{ env.NAME }}
           file: ${{ env.NAME }}/Containerfile
           platforms: linux/amd64,linux/arm64
-          tags: ${{ env.IMAGE_REGISTRY }}:latest
+          tags: ${{ env.IMAGE_REGISTRY }}/${{ env.NAME }}:latest
           push: true
           provenance: false
