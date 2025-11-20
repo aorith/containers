@@ -1,39 +1,49 @@
-FROM docker.io/library/archlinux:base-devel AS builder
+# Dev environment using archlinux
+# Shims are configured using distrobox-assemble in my dotfiles
 
-RUN pacman -Syu --noconfirm git \
-    && useradd -m build \
-    && echo 'build ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/build
+FROM scratch AS ctx
+COPY packages /packages
 
-USER build
-RUN mkdir -p /tmp/build /tmp/pkgs
-WORKDIR /tmp/build
-
-RUN git clone https://aur.archlinux.org/neovim-git.git \
-    && cd neovim-git \
-    && makepkg --clean --force --syncdeps --noconfirm --noprogressbar \
-    && mv neovim*.pkg* /tmp/pkgs/ \
-    && cd /tmp/build
-
+# https://github.com/containers/toolbox/blob/main/images/arch/Containerfile
 FROM quay.io/toolbx/arch-toolbox:latest
-
-ENV CONTAINER_ID=archbox
 
 LABEL io.containers.autoupdate="registry" \
       maintainer="aomanu+containers@gmail.com"
 
-COPY packages /
-RUN sed 's/#.*//g' /packages | sort | uniq | xargs | pacman -Syu --needed --noconfirm \
-    && rm /packages
+ENV CONTAINER_ID=archbox
 
-RUN mkdir -p /tmp/pkgs
-COPY --from=builder /tmp/pkgs/*.pkg* /tmp/pkgs/
-RUN pacman -U --noconfirm /tmp/pkgs/*.pkg* \
-    && rm -rf /tmp/pkgs
+# Init pacman and create build user
+RUN printf "[multilib]\nInclude = /etc/pacman.d/mirrorlist\n" | tee -a /etc/pacman.conf && \
+    sed -i 's/#MAKEFLAGS="-j2"/MAKEFLAGS="-j$(nproc)"/g' /etc/makepkg.conf && \
+    pacman-key --init && pacman-key --populate && \
+    pacman -Syu --noconfirm && \
+    useradd -m --shell=/bin/bash build && usermod -L build && \
+    mkdir -p /etc/sudoers.d && \
+    echo "build ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/build && \
+    echo "root ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/root
 
-COPY extra.d/ /tmp/extra.d
-RUN find /tmp/extra.d -type f -exec bash {} \; \
-    && rm -rf /tmp/extra.d
+# Add yay
+USER build
+WORKDIR /home/build
+RUN git clone https://aur.archlinux.org/yay.git --single-branch && \
+    cd yay && \
+    makepkg -si --noconfirm && \
+    cd .. && \
+    rm -rf yay
 
-COPY host-shims /
-RUN grep -v '^#' /host-shims | sort | uniq | while read -r b; do ln -sf "$(which host-spawn)" /usr/local/bin/"$b"; done \
-    && rm /host-shims
+USER root
+WORKDIR /
+
+# Install packages
+RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
+    --mount=type=tmpfs,dst=/tmp \
+    pacman -Syu --needed --noconfirm - < /ctx/packages
+
+# Cleanup
+RUN sed -i 's@#en_US.UTF-8@en_US.UTF-8@g; s@#es_ES.UTF-8@es_ES.UTF-8@g' /etc/locale.gen && \
+    userdel -r build && \
+    rm -f /etc/sudoers.d/build \
+    rm -f /etc/sudoers.d/root \
+    rm -rf /home/build && \
+    rm -rf /tmp/* && \
+    pacman -S --noconfirm --clean --clean

@@ -1,5 +1,29 @@
-# Essentials
+bash-language-server
+cue
+eslint-language-server
+fd
+fzf
+gofumpt
+gopls
+helm
+hurl
+jq
+lua-language-server
+marksman
+neovim
+prettier
+python-pip
+ripgrep
+ruff
+rust-analyzer
+rustup
+shfmt
+stylua
+taplo-cli
+tree-sitter-cli
+typescript-language-server
+vscode-css-languageserver
+vscode-html-languageserver
 wl-clipboard
-terraform
-
-# vim: ft=conf
+yaml-language-server
+yq
