@@ -40,7 +40,7 @@ jobs:
           images: ${{ env.IMAGE_REGISTRY }}/${{ env.NAME }}
 
       - name: Login to GHCR
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ${{ env.IMAGE_REGISTRY }}
           username: ${{ github.actor }}
@@ -100,7 +100,7 @@ jobs:
           merge-multiple: true
 
       - name: Login to GHCR
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ${{ env.IMAGE_REGISTRY }}
           username: ${{ github.actor }}
