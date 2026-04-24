@@ -3,12 +3,15 @@ cue
 eslint-language-server
 fd
 fzf
+git
 gofumpt
+golangci-lint
 gopls
 helm
 hurl
 jq
 lua-language-server
+make
 marksman
 neovim
 prettier
@@ -17,6 +20,7 @@ ripgrep
 ruff
 rust-analyzer
 rustup
+shellcheck
 shfmt
 stylua
 taplo-cli
